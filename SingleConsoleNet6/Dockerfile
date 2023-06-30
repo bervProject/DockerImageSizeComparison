@@ -6,4 +6,6 @@ RUN dotnet restore && dotnet publish -c Release -o /app/publish && chmod +x "/ap
 FROM alpine:3.18 as runtime
 COPY --from=build /app/publish /app/publish
 WORKDIR /app/publish
+# install required lib
+RUN apk upgrade --no-cache && apk add --no-cache libgcc libstdc++
 CMD ["./SingleConsoleNet6"]
